@@ -1,0 +1,68 @@
+Hola, vamos a hacer una aplicacion para gestionar la secretaria de una comision fallera llamada "Falla Valencia Teodoro Llorente El Cano".
+Quiero que uses los patrones de Clean Code que Uncle Bob escribió en su libro "Clean Code". 
+
+Esta aplicación estará basada en Python. Usará Streamlit para la UI y la autenticacion de usuarios, SQLAlchemy para gestionar una base de datos MySQL. Y Poetry para la gestión de dependencias.
+La estructura de ficheros tiene que ser clara y todo bien separado y con coherencia.
+Las clases de acceso a la base de datos tendran la coletilla _dao. Las clases que tengan que ver conla interfaz de usuario tendran la coletilla _controller y las clases que tengan que ver con la lógica de
+negocio tendrán la coletilla _manager.
+
+La aplicacion, al iniciarse deberá hacer las siguientes tareas:
+
+ - Primero, inicializar todas las librerias que sean necesarias.
+ - Segundo, deberá conectar con la base de datos. Habrá una variable de entorno que si está activada lo que hará será crear toda la base de datos mediante SQLAlchemy con todas las clases que se hayan registrado en el ORM.
+   Si esta variable de entorno no esta definida o esta definida con un valor diferente a True: Si la base de datos existe, continuará la ejecución, en caso contrario fallará.
+ - Tercero, inicializará el resto de la aplicacion. Lo primera pagina que se abrirá será el login.
+
+Una vez en la pantalla de login:
+  - La pantalla de login será la tipica con un campo de usuario y otro de contraseña y un botón de login. 
+  - Al pulsar el boton de login, se ira a base de datos y se comprobará si el usuario existe. Si no existe devolverá un error y si existe, entrará a la pagina principal de la aplicacion.
+
+En la pantalla principal:
+  - Se mostrará un menú en el lateral izquierdo para navegar por las diferentes pantallas de la aplicacion, al entrar por defecto estará seleccionada la primera pagina que contendrá una tabla con los datos de todos los falleros
+    con una paginacion mediante Streamlit.
+  - De momento la otra opción que habrá en la aplicacion es crear un nuevo usuario para poder acceder a esta.
+
+Estos son los CREATE de las tablas de base de datos que de momento usaremos para los ejemplos.
+
+CREATE TABLE `Usuario` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`email` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`hashed_password` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`is_active` BINARY(50) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=2
+;
+
+CREATE TABLE `Fallero` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`apellidos` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`dni` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`fecha_nacimiento` DATE NULL DEFAULT NULL,
+	`fecha_alta` DATE NULL DEFAULT NULL,
+	`activo` BINARY(50) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+Como puedes observar ya hay una pequeña base que no me gusta mucho. Te dejo refactorizarla entera para ajustarla a las necesidades.
+
+---
+
+REFORMULACIÓN Y ESTRUCTURA PROPUESTA (SIGUIENDO CLEAN CODE):
+
+- Modelos en /models con nombres en minúsculas y campos consistentes.
+- Acceso a datos en /dao con sufijo _dao.
+- Lógica de negocio en /managers con sufijo _manager.
+- Controladores de UI en /managers (por simplicidad, aunque podrían ir en /controllers).
+- app.py como entrypoint, inicializa librerías y base de datos según INIT_DB.
+- Uso de variables de entorno: INIT_DB y DATABASE_URL.
+- Contraseñas hasheadas y campo activo para usuarios y falleros.
+- Separación estricta de responsabilidades y nombres claros.
+- Ejemplo de creación de usuario administrador en usuario_dao.py.

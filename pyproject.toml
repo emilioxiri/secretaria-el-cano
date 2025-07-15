@@ -1,0 +1,31 @@
+[project]
+name = "secretaria-falla-elcano"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "emilio.honrubia",email = "emilio.honrubia@airliquide.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit (>=1.46.0,<2.0.0)",
+    "pandas (>=2.3.0,<3.0.0)",
+    "mysql-connector-python (>=9.3.0,<10.0.0)",
+    "streamlit-authenticator (>=0.4.2,<0.5.0)",
+    "bcrypt (>=4.3.0,<5.0.0)",
+    "sqlalchemy (>=2.0.41,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[connections.mysql]
+dialect = "mysql"
+host = "127.0.0.1"
+port = 3306
+database = "secretaria-el-cano"
+username = "root"
+password = "nolasabrasnunca1970"
+
