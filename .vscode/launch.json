@@ -9,7 +9,7 @@
       "args": ["run", "${workspaceFolder}/app.py"],
       "env": {
         "PYTHONPATH": "${workspaceFolder}",
-        "INIT_DB": "False"
+        "INIT_DB": "True"
       },
       "justMyCode": false
     }

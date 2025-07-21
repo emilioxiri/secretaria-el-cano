@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 import streamlit as st
 import streamlit_authenticator as stauth
 from dao.database import DatabaseManager
@@ -30,7 +30,7 @@ class AuthManager:
             cookie_expiry_days=1,
         )
 
-    def login(self) -> (Tuple[str | None, bool | None, str | None] | None):
+    def login(self) -> Optional[Tuple[Optional[str], Optional[bool], Optional[str]]]:
         """Muestra el widget de login y devuelve el estado."""
         st.image("assets/logo.png", width=180)
         return self.authenticator.login("main", fields=login_translations)
