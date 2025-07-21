@@ -1,6 +1,6 @@
 login_translations = {
     'Form name': 'Secretaria El Cano',
-    'Username': 'Correo electrónico',
+    'Username': 'Usuario',
     'Password': 'Contraseña',
     'Login': 'Entrar',
     'Logged in as': 'Conectado como',

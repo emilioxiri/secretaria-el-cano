@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -39,3 +40,19 @@ class DatabaseManager:
             elif estado == "Inactivos":
                 query = query.filter(Fallero.activo == False)
             return query.all()
+
+    def insert_fallero(self, nombre, apellidos, dni, fecha_nacimiento):
+        with self.get_db_session() as db:
+            nuevo_fallero = Fallero(
+                nombre=nombre,
+                apellidos=apellidos,
+                dni=dni,
+                fecha_nacimiento=fecha_nacimiento,
+                fecha_alta=datetime.now().date(),
+                activo=True
+            )
+            db.add(nuevo_fallero)
+            db.commit()
+            db.refresh(nuevo_fallero)
+            return nuevo_fallero
+

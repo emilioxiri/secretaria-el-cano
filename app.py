@@ -57,9 +57,12 @@ class SecretariaElCanoApp:
 
         if menu_choice == "Ver Falleros":
             self.ui_manager.display_falleros_view(self.db_manager)
+
+        elif menu_choice == "Ver Usuarios":
+            self.ui_manager.display_usuarios_view(self.db_manager)
         
         elif menu_choice == "Añadir Fallero":
-            self.ui_manager.display_add_fallero_view()
+            self.ui_manager.display_add_fallero_view(self.db_manager)
         
         # ... Aquí irían las llamadas a otros métodos de la UI
         else:
